@@ -1,0 +1,1957 @@
+<!doctype html>
+<html lang="en" class="tier-low">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <style>
+      body {
+        transition: opacity ease-in 0.2s;
+      }
+      body[unresolved] {
+        opacity: 0;
+        display: block;
+        overflow: hidden;
+        position: relative;
+      }
+    </style>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Happy Birthday, My Love 🎂🌸</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com/" />
+    <link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin="" />
+    <link href="./assets/fonts/google-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <link rel="stylesheet" href="./assets/css/animations.css" />
+    <link rel="stylesheet" href="./assets/css/dark-romantic.css" />
+    <link rel="stylesheet" href="./assets/css/performance.css" />
+    <link rel="stylesheet" href="./assets/css/gpu-optimization.css" />
+    <script src="./assets/js/device-tier-system.js"></script>
+    <style>
+      /* =========================================
+   CINEMATIC MUSIC PLAYER — Hidden-by-default v3
+   Small floating note icon → slide-up panel
+   ========================================= */
+
+      /* ── Floating music toggle button ── */
+      #cp-toggle-btn {
+        position: fixed;
+        bottom: 28px;
+        right: 28px;
+        z-index: 9999;
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        border: none;
+        cursor: pointer;
+        background: rgba(20, 5, 15, 0.88);
+        backdrop-filter: blur(20px) saturate(1.5);
+        -webkit-backdrop-filter: blur(20px) saturate(1.5);
+        box-shadow:
+          0 8px 32px rgba(0, 0, 0, 0.6),
+          0 0 0 1px rgba(255, 150, 180, 0.18) inset,
+          0 0 20px rgba(180, 50, 90, 0.15);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition:
+          transform 0.3s cubic-bezier(0.23, 1, 0.32, 1),
+          box-shadow 0.3s ease,
+          background 0.3s ease;
+        animation: cp-toggle-float 5s ease-in-out infinite;
+        will-change: transform;
+        user-select: none;
+      }
+
+      @keyframes cp-toggle-float {
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-5px);
+        }
+      }
+
+      #cp-toggle-btn:hover {
+        background: rgba(40, 10, 25, 0.95);
+        box-shadow:
+          0 12px 40px rgba(0, 0, 0, 0.7),
+          0 0 0 1px rgba(255, 150, 180, 0.3) inset,
+          0 0 30px rgba(200, 60, 100, 0.25);
+        animation-play-state: paused;
+      }
+
+      #cp-toggle-btn:active {
+        transform: scale(0.93);
+      }
+
+      /* Pulsing ring when playing */
+      #cp-toggle-btn.cp-is-playing::after {
+        content: "";
+        position: absolute;
+        inset: -4px;
+        border-radius: 50%;
+        border: 1.5px solid rgba(255, 130, 170, 0.4);
+        animation: cp-ring-pulse 2.5s ease-out infinite;
+      }
+      @keyframes cp-ring-pulse {
+        0% {
+          transform: scale(1);
+          opacity: 0.7;
+        }
+        100% {
+          transform: scale(1.45);
+          opacity: 0;
+        }
+      }
+
+      .cp-toggle-icon {
+        width: 22px;
+        height: 22px;
+        color: rgba(255, 190, 215, 0.9);
+        transition:
+          transform 0.35s cubic-bezier(0.23, 1, 0.32, 1),
+          opacity 0.2s ease;
+        position: absolute;
+      }
+      .cp-toggle-icon.cp-icon-note {
+      }
+      .cp-toggle-icon.cp-icon-close {
+        opacity: 0;
+        transform: rotate(-90deg) scale(0.6);
+      }
+
+      #cp-toggle-btn.cp-panel-open .cp-icon-note {
+        opacity: 0;
+        transform: rotate(90deg) scale(0.6);
+      }
+      #cp-toggle-btn.cp-panel-open .cp-icon-close {
+        opacity: 1;
+        transform: rotate(0deg) scale(1);
+      }
+
+      /* ── Slide-up music panel ── */
+      #cp-root {
+        position: fixed;
+        bottom: 92px;
+        right: 28px;
+        z-index: 9998;
+        width: 230px;
+        border-radius: 20px;
+        overflow: hidden;
+        background: rgba(8, 2, 14, 0.85);
+        backdrop-filter: blur(28px) saturate(1.6);
+        -webkit-backdrop-filter: blur(28px) saturate(1.6);
+        box-shadow:
+          0 24px 64px rgba(0, 0, 0, 0.7),
+          0 0 0 1px rgba(255, 150, 180, 0.14) inset,
+          0 0 40px rgba(120, 20, 60, 0.12);
+        /* Hidden by default */
+        opacity: 0;
+        transform: translateY(20px) scale(0.96);
+        pointer-events: none;
+        transition:
+          opacity 0.4s cubic-bezier(0.23, 1, 0.32, 1),
+          transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        user-select: none;
+        transform-origin: bottom right;
+      }
+
+      /* Revealed state */
+      #cp-root.cp-visible {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        pointer-events: auto;
+      }
+
+      /* ── Ambient blurred bg ── */
+      .cp-bg-blur {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+        border-radius: inherit;
+        opacity: 0;
+        transition: opacity 0.8s ease;
+        pointer-events: none;
+        z-index: 0;
+      }
+      .cp-bg-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        filter: blur(28px) saturate(1.4) brightness(0.28);
+        transform: scale(1.15);
+      }
+      #cp-root.cp-playing .cp-bg-blur {
+        opacity: 1;
+      }
+
+      /* ── Animated border ring ── */
+      .cp-border-ring {
+        position: absolute;
+        inset: -1px;
+        border-radius: 21px;
+        padding: 1px;
+        background: conic-gradient(
+          from var(--cp-angle, 0deg),
+          transparent 0%,
+          rgba(255, 150, 180, 0.55) 20%,
+          rgba(200, 80, 130, 0.75) 40%,
+          rgba(255, 180, 210, 0.45) 60%,
+          transparent 80%
+        );
+        -webkit-mask:
+          linear-gradient(#fff 0 0) content-box,
+          linear-gradient(#fff 0 0);
+        mask:
+          linear-gradient(#fff 0 0) content-box,
+          linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        opacity: 0;
+        transition: opacity 0.6s ease;
+        pointer-events: none;
+        z-index: 1;
+        animation: cp-ring-spin 4s linear infinite paused;
+      }
+      @property --cp-angle {
+        syntax: "<angle>";
+        inherits: false;
+        initial-value: 0deg;
+      }
+      @keyframes cp-ring-spin {
+        to {
+          --cp-angle: 360deg;
+        }
+      }
+      #cp-root.cp-playing .cp-border-ring {
+        opacity: 1;
+        animation-play-state: running;
+      }
+
+      /* ── Shine sweep ── */
+      .cp-shine {
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        background: linear-gradient(
+          115deg,
+          transparent 30%,
+          rgba(255, 255, 255, 0.04) 50%,
+          transparent 70%
+        );
+        background-size: 200% 100%;
+        animation: cp-shine-sweep 5s ease-in-out infinite 2s;
+        pointer-events: none;
+        z-index: 2;
+      }
+      @keyframes cp-shine-sweep {
+        0% {
+          background-position: 200% 0;
+        }
+        50% {
+          background-position: -200% 0;
+        }
+        100% {
+          background-position: 200% 0;
+        }
+      }
+
+      /* ── Mouse-reactive light orb ── */
+      .cp-light-orb {
+        position: absolute;
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(255, 140, 190, 0.16) 0%,
+          transparent 70%
+        );
+        pointer-events: none;
+        z-index: 2;
+        top: 0;
+        left: 0;
+        transition: transform 0.1s linear;
+        mix-blend-mode: screen;
+      }
+
+      /* ── Card inner ── */
+      .cp-card {
+        position: relative;
+        z-index: 3;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 18px 16px 16px;
+        gap: 12px;
+      }
+
+      /* ── Cover ── */
+      .cp-cover-wrap {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow:
+          0 8px 32px rgba(0, 0, 0, 0.55),
+          0 0 0 1px rgba(255, 150, 180, 0.1) inset;
+        flex-shrink: 0;
+        background: rgba(255, 150, 180, 0.06);
+      }
+      .cp-cover {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition:
+          transform 0.6s cubic-bezier(0.23, 1, 0.32, 1),
+          filter 0.4s ease;
+      }
+      #cp-root:hover .cp-cover {
+        transform: scale(1.03);
+      }
+      .cp-cover-overlay {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+          to top,
+          rgba(8, 2, 14, 0.55) 0%,
+          transparent 50%
+        );
+        pointer-events: none;
+      }
+      .cp-viz {
+        position: absolute;
+        bottom: 8px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 120px;
+        height: 36px;
+        opacity: 0.85;
+        pointer-events: none;
+        mix-blend-mode: screen;
+      }
+
+      /* ── Body ── */
+      .cp-body {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      /* ── Track info ── */
+      .cp-info {
+        text-align: center;
+      }
+      .cp-title {
+        font-family: "Cormorant Garamond", "Georgia", serif;
+        font-size: 13px;
+        font-weight: 600;
+        color: rgba(255, 235, 245, 0.95);
+        letter-spacing: 0.02em;
+        margin: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .cp-artist {
+        font-family: "Jost", "Helvetica Neue", sans-serif;
+        font-size: 10px;
+        font-weight: 300;
+        color: rgba(255, 160, 190, 0.5);
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        margin: 2px 0 0;
+      }
+
+      /* ── Progress ── */
+      .cp-progress-wrap {
+        width: 100%;
+      }
+      .cp-progress-track {
+        position: relative;
+        height: 3px;
+        background: rgba(255, 150, 180, 0.12);
+        border-radius: 2px;
+        overflow: visible;
+      }
+      .cp-progress-fill {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(
+          90deg,
+          rgba(200, 60, 110, 0.8),
+          rgba(255, 180, 210, 0.95)
+        );
+        border-radius: 2px;
+        transition: width 0.25s linear;
+      }
+      .cp-progress-dot {
+        position: absolute;
+        top: 50%;
+        left: 0%;
+        width: 9px;
+        height: 9px;
+        background: #fff;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        box-shadow: 0 0 6px rgba(255, 120, 170, 0.8);
+        transition:
+          left 0.25s linear,
+          transform 0.2s ease;
+        pointer-events: none;
+      }
+      .cp-progress-track:hover .cp-progress-dot {
+        transform: translate(-50%, -50%) scale(1.4);
+      }
+      .cp-times {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 5px;
+        font-family: "Jost", monospace;
+        font-size: 9px;
+        font-weight: 300;
+        color: rgba(255, 150, 180, 0.38);
+        letter-spacing: 0.04em;
+      }
+
+      /* ── Controls ── */
+      .cp-controls {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+      }
+      .cp-btn {
+        background: none;
+        border: none;
+        color: rgba(255, 190, 215, 0.7);
+        cursor: pointer;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition:
+          color 0.2s,
+          background 0.2s,
+          transform 0.18s cubic-bezier(0.23, 1, 0.32, 1);
+        padding: 0;
+      }
+      .cp-btn svg {
+        display: block;
+      }
+      .cp-prev-btn,
+      .cp-next-btn {
+        width: 32px;
+        height: 32px;
+      }
+      .cp-prev-btn svg,
+      .cp-next-btn svg {
+        width: 18px;
+        height: 18px;
+      }
+      .cp-play-btn {
+        width: 44px;
+        height: 44px;
+        background: rgba(255, 150, 180, 0.1);
+        border: 1px solid rgba(255, 150, 180, 0.2);
+      }
+      .cp-play-btn svg {
+        width: 22px;
+        height: 22px;
+      }
+      .cp-btn:hover {
+        color: #fff;
+        transform: scale(1.12);
+        background: rgba(255, 150, 180, 0.1);
+      }
+      .cp-btn:active {
+        transform: scale(0.93);
+      }
+      .cp-play-btn:hover {
+        background: rgba(255, 150, 180, 0.2);
+        border-color: rgba(255, 150, 180, 0.4);
+      }
+
+      @keyframes cp-play-pulse {
+        0% {
+          box-shadow: 0 0 0 0 rgba(200, 60, 110, 0.4);
+        }
+        70% {
+          box-shadow: 0 0 0 10px rgba(200, 60, 110, 0);
+        }
+        100% {
+          box-shadow: 0 0 0 0 rgba(200, 60, 110, 0);
+        }
+      }
+      #cp-root.cp-playing .cp-play-btn {
+        animation: cp-play-pulse 2.2s ease-out infinite;
+      }
+
+      /* ── Volume ── */
+      .cp-vol-row {
+        display: flex;
+        align-items: center;
+        gap: 7px;
+      }
+      .cp-vol-icon {
+        width: 14px;
+        height: 14px;
+        flex-shrink: 0;
+        color: rgba(255, 150, 180, 0.32);
+      }
+      .cp-vol-track {
+        position: relative;
+        flex: 1;
+        height: 3px;
+        background: rgba(255, 150, 180, 0.12);
+        border-radius: 2px;
+      }
+      .cp-vol-fill {
+        position: absolute;
+        inset: 0;
+        width: 75%;
+        background: linear-gradient(
+          90deg,
+          rgba(180, 50, 100, 0.65),
+          rgba(255, 150, 180, 0.8)
+        );
+        border-radius: 2px;
+        pointer-events: none;
+        transition: width 0.05s linear;
+      }
+      .cp-vol-input {
+        position: absolute;
+        inset: -8px 0;
+        width: 100%;
+        opacity: 0;
+        cursor: pointer;
+        height: 20px;
+        margin: 0;
+      }
+
+      /* ── Close button inside panel (top-right) ── */
+      .cp-mini-btn {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        z-index: 10;
+        background: rgba(255, 150, 180, 0.07);
+        border: 1px solid rgba(255, 150, 180, 0.12);
+        border-radius: 50%;
+        width: 22px;
+        height: 22px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        color: rgba(255, 150, 180, 0.4);
+        transition:
+          color 0.2s,
+          background 0.2s,
+          transform 0.15s;
+        padding: 0;
+      }
+      .cp-mini-btn svg {
+        width: 12px;
+        height: 12px;
+      }
+      .cp-mini-btn:hover {
+        color: #fff;
+        background: rgba(255, 150, 180, 0.18);
+        transform: scale(1.1);
+      }
+
+      /* ── Fallback ── */
+      .cp-fallback {
+        position: absolute;
+        inset: 0;
+        z-index: 20;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: rgba(8, 2, 14, 0.88);
+        border-radius: inherit;
+        cursor: pointer;
+        font-family: "Cormorant Garamond", serif;
+        font-style: italic;
+        font-size: 12px;
+        color: rgba(255, 180, 210, 0.8);
+        letter-spacing: 0.05em;
+        transition: opacity 0.3s ease;
+      }
+      .cp-hidden {
+        display: none !important;
+      }
+
+      @media (max-width: 600px) {
+        #cp-toggle-btn {
+          bottom: 16px;
+          right: 16px;
+          width: 46px;
+          height: 46px;
+        }
+        #cp-root {
+          bottom: 74px;
+          right: 16px;
+          width: 200px;
+          border-radius: 16px;
+        }
+        .cp-title {
+          font-size: 12px;
+        }
+        .cp-play-btn {
+          width: 40px;
+          height: 40px;
+        }
+        .cp-play-btn svg {
+          width: 20px;
+          height: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body style="cursor: auto">
+    <!-- ===== GLOBAL CINEMATIC BACKGROUND (fixed, z=-10, one unified layer) ===== -->
+    <div id="global-bg-layer" aria-hidden="true"></div>
+
+    <!-- ===== INTRO SCENE ===== -->
+    <div id="intro-scene">
+      <canvas
+        id="particle-canvas-intro"
+        width="2514"
+        height="1328"
+        style="width: 2514px; height: 1328px"
+      ></canvas>
+      <div id="gift-wrapper">
+        <div id="gift-container" onclick="openGift()">
+          <div id="gift-box">
+            <div class="gift-lid" style="cursor: pointer">
+              <div class="ribbon-h" style="cursor: pointer"></div>
+              <div class="ribbon-v"></div>
+              <div class="bow">
+                <div class="bow-left"></div>
+                <div class="bow-right"></div>
+                <div class="bow-center"></div>
+              </div>
+            </div>
+            <div class="gift-body" style="cursor: pointer">
+              <div class="ribbon-body-h"></div>
+              <div class="ribbon-body-v" style="cursor: pointer"></div>
+            </div>
+          </div>
+          <p class="gift-hint">🎂 tap to open your gift ✨</p>
+        </div>
+        <div id="bloom-container"></div>
+      </div>
+      <div id="petal-rain-intro"></div>
+      <div id="intro-overlay"></div>
+      <div
+        class="sparkle"
+        style="
+          left: 74.331%;
+          top: 58.4163%;
+          color: rgba(255, 143, 167, 0.8);
+          font-size: 10.2755px;
+          animation-duration: 2.39631s;
+          animation-delay: 1.48966s;
+        "
+      >
+        ❋
+      </div>
+      <div
+        class="sparkle"
+        style="
+          left: 46.3322%;
+          top: 22.4706%;
+          color: rgba(255, 154, 167, 0.8);
+          font-size: 12.6619px;
+          animation-duration: 3.20965s;
+          animation-delay: 0.541432s;
+        "
+      >
+        ✧
+      </div>
+      <div
+        class="sparkle"
+        style="
+          left: 62.2331%;
+          top: 85.7799%;
+          color: rgba(255, 165, 215, 0.8);
+          font-size: 22.258px;
+          animation-duration: 3.96367s;
+          animation-delay: 1.16925s;
+        "
+      >
+        ❋
+      </div>
+      <div
+        class="sparkle"
+        style="
+          left: 22.8827%;
+          top: 74.8851%;
+          color: rgba(255, 174, 183, 0.8);
+          font-size: 19.5514px;
+          animation-duration: 4.26896s;
+          animation-delay: 0.94795s;
+        "
+      >
+        ✹
+      </div>
+      <div
+        class="sparkle"
+        style="
+          left: 43.9651%;
+          top: 10.5043%;
+          color: rgba(255, 143, 173, 0.8);
+          font-size: 9.49052px;
+          animation-duration: 4.52674s;
+          animation-delay: 1.53503s;
+        "
+      >
+        ✸
+      </div>
+      <div
+        class="sparkle"
+        style="
+          left: 21.1061%;
+          top: 70.5274%;
+          color: rgba(255, 200, 170, 0.8);
+          font-size: 19.9681px;
+          animation-duration: 2.20724s;
+          animation-delay: 1.39786s;
+        "
+      >
+        ✸
+      </div>
+      <div
+        class="sparkle"
+        style="
+          left: 5.66508%;
+          top: 18.9214%;
+          color: rgba(255, 183, 190, 0.8);
+          font-size: 11.4275px;
+          animation-duration: 2.8646s;
+          animation-delay: 0.390927s;
+        "
+      >
+        ✧
+      </div>
+      <div
+        class="sparkle"
+        style="
+          left: 37.7059%;
+          top: 60.6886%;
+          color: rgba(255, 167, 167, 0.8);
+          font-size: 8.8167px;
+          animation-duration: 2.42775s;
+          animation-delay: 0.749616s;
+        "
+      >
+        ✸
+      </div>
+      <div
+        class="sparkle"
+        style="
+          left: 69.4341%;
+          top: 18.8149%;
+          color: rgba(255, 207, 162, 0.8);
+          font-size: 8.30587px;
+          animation-duration: 4.32293s;
+          animation-delay: 0.0563956s;
+        "
+      >
+        ✹
+      </div>
+      <div
+        class="sparkle"
+        style="
+          left: 9.68308%;
+          top: 75.5723%;
+          color: rgba(255, 168, 189, 0.8);
+          font-size: 9.69229px;
+          animation-duration: 3.12942s;
+          animation-delay: 0.303656s;
+        "
+      >
+        ✦
+      </div>
+      <div
+        class="sparkle"
+        style="
+          left: 43.625%;
+          top: 75.1404%;
+          color: rgba(255, 204, 183, 0.8);
+          font-size: 20.6687px;
+          animation-duration: 4.30913s;
+          animation-delay: 1.57245s;
+        "
+      >
+        ✦
+      </div>
+      <div
+        class="sparkle"
+        style="
+          left: 62.3244%;
+          top: 64.8721%;
+          color: rgba(255, 194, 217, 0.8);
+          font-size: 10.3845px;
+          animation-duration: 3.535s;
+          animation-delay: 1.29602s;
+        "
+      >
+        ❋
+      </div>
+      <div
+        class="sparkle"
+        style="
+          left: 96.2044%;
+          top: 27.6508%;
+          color: rgba(255, 201, 179, 0.8);
+          font-size: 23.5741px;
+          animation-duration: 3.04433s;
+          animation-delay: 1.09159s;
+        "
+      >
+        ✦
+      </div>
+      <div
+        class="sparkle"
+        style="
+          left: 27.8301%;
+          top: 88.5149%;
+          color: rgba(255, 195, 170, 0.8);
+          font-size: 21.059px;
+          animation-duration: 4.18832s;
+          animation-delay: 0.589244s;
+        "
+      >
+        ✸
+      </div>
+      <div
+        class="sparkle"
+        style="
+          left: 15.2494%;
+          top: 36.6715%;
+          color: rgba(255, 153, 206, 0.8);
+          font-size: 19.2802px;
+          animation-duration: 3.71055s;
+          animation-delay: 1.25549s;
+        "
+      >
+        ✧
+      </div>
+      <div
+        class="sparkle"
+        style="
+          left: 90.8364%;
+          top: 55.2071%;
+          color: rgba(255, 158, 213, 0.8);
+          font-size: 11.1123px;
+          animation-duration: 2.14037s;
+          animation-delay: 0.909613s;
+        "
+      >
+        ❋
+      </div>
+      <div
+        class="sparkle"
+        style="
+          left: 73.4025%;
+          top: 79.8443%;
+          color: rgba(255, 172, 167, 0.8);
+          font-size: 9.91888px;
+          animation-duration: 2.08523s;
+          animation-delay: 0.481372s;
+        "
+      >
+        ✦
+      </div>
+      <div
+        class="sparkle"
+        style="
+          left: 33.0021%;
+          top: 54.8694%;
+          color: rgba(255, 215, 211, 0.8);
+          font-size: 11.3809px;
+          animation-duration: 3.4024s;
+          animation-delay: 0.151971s;
+        "
+      >
+        ✺
+      </div>
+      <div
+        class="sparkle"
+        style="
+          left: 72.3346%;
+          top: 1.86626%;
+          color: rgba(255, 212, 162, 0.8);
+          font-size: 22.5069px;
+          animation-duration: 2.55442s;
+          animation-delay: 0.31037s;
+        "
+      >
+        ✺
+      </div>
+      <div
+        class="sparkle"
+        style="
+          left: 21.1653%;
+          top: 28.7091%;
+          color: rgba(255, 146, 191, 0.8);
+          font-size: 9.86085px;
+          animation-duration: 2.71586s;
+          animation-delay: 1.22295s;
+        "
+      >
+        ⋆
+      </div>
+      <div
+        class="sparkle"
+        style="
+          left: 21.9593%;
+          top: 58.805%;
+          color: rgba(255, 167, 187, 0.8);
+          font-size: 8.23287px;
+          animation-duration: 2.58646s;
+          animation-delay: 0.747937s;
+        "
+      >
+        ✸
+      </div>
+      <div
+        class="sparkle"
+        style="
+          left: 83.7155%;
+          top: 37.5828%;
+          color: rgba(255, 182, 199, 0.8);
+          font-size: 19.007px;
+          animation-duration: 4.65449s;
+          animation-delay: 0.504277s;
+        "
+      >
+        ✺
+      </div>
+      <div
+        class="sparkle"
+        style="
+          left: 58.7163%;
+          top: 38.232%;
+          color: rgba(255, 206, 198, 0.8);
+          font-size: 17.0176px;
+          animation-duration: 3.04431s;
+          animation-delay: 0.543779s;
+        "
+      >
+        ✺
+      </div>
+      <div
+        class="sparkle"
+        style="
+          left: 28.7157%;
+          top: 37.6904%;
+          color: rgba(255, 157, 183, 0.8);
+          font-size: 13.4461px;
+          animation-duration: 4.92839s;
+          animation-delay: 0.863445s;
+        "
+      >
+        ✦
+      </div>
+    </div>
+
+    <!-- Fixed ambient layers — live at body level so they cover ALL sections -->
+    <div class="cinematic-vignette"></div>
+    <canvas id="particle-canvas"></canvas>
+    <div id="falling-petals"></div>
+
+    <!-- ===== MAIN WEBSITE ===== -->
+    <div id="main-site" class="hidden">
+      <!-- ===== HERO ===== -->
+      <section id="hero">
+        <div class="hero-content">
+          <p class="hero-eyebrow">a birthday serenade in bloom</p>
+          <h1 class="hero-title">
+            <span class="line1">Happy Birthday,</span>
+            <span class="line2 italic">My Everything</span>
+          </h1>
+          <p class="hero-sub">
+            Today the whole universe is celebrating the day you were born into
+            my world.
+          </p>
+          <div class="hero-flowers">
+            <svg
+              class="hero-flower"
+              viewBox="0 0 100 100"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <g class="flower-group">
+                <ellipse
+                  cx="50"
+                  cy="30"
+                  rx="12"
+                  ry="22"
+                  fill="rgba(255,182,193,0.85)"
+                  class="petal p1"
+                ></ellipse>
+                <ellipse
+                  cx="50"
+                  cy="30"
+                  rx="12"
+                  ry="22"
+                  fill="rgba(255,182,193,0.85)"
+                  class="petal p2"
+                  transform="rotate(60,50,50)"
+                ></ellipse>
+                <ellipse
+                  cx="50"
+                  cy="30"
+                  rx="12"
+                  ry="22"
+                  fill="rgba(255,182,193,0.85)"
+                  class="petal p3"
+                  transform="rotate(120,50,50)"
+                ></ellipse>
+                <ellipse
+                  cx="50"
+                  cy="30"
+                  rx="12"
+                  ry="22"
+                  fill="rgba(255,192,203,0.85)"
+                  class="petal p4"
+                  transform="rotate(180,50,50)"
+                ></ellipse>
+                <ellipse
+                  cx="50"
+                  cy="30"
+                  rx="12"
+                  ry="22"
+                  fill="rgba(255,192,203,0.85)"
+                  class="petal p5"
+                  transform="rotate(240,50,50)"
+                ></ellipse>
+                <ellipse
+                  cx="50"
+                  cy="30"
+                  rx="12"
+                  ry="22"
+                  fill="rgba(255,192,203,0.85)"
+                  class="petal p6"
+                  transform="rotate(300,50,50)"
+                ></ellipse>
+                <circle
+                  cx="50"
+                  cy="50"
+                  r="10"
+                  fill="rgba(255,220,180,0.95)"
+                ></circle>
+              </g>
+            </svg>
+          </div>
+          <a
+            href="https://happybirthdaycintakuuu.vercel.app/#message"
+            class="scroll-btn"
+          >
+            <span>Discover your birthday surprise</span>
+            <div class="scroll-arrow">↓</div>
+          </a>
+        </div>
+      </section>
+    </div>
+
+    <!-- ===== MESSAGE ===== -->
+    <section id="message">
+      <div class="section-inner">
+        <div class="message-card glass">
+          <div class="card-flowers-top">
+            <span class="inline-flower">🌸</span>
+            <span class="inline-flower delay1">🌺</span>
+            <span class="inline-flower delay2">🌸</span>
+          </div>
+          <p class="msg-label">from the bottom of my heart</p>
+          <h2 class="msg-title">
+            Today is the day<br /><em>the world became</em><br />more beautiful.
+          </h2>
+          <p class="msg-body">
+            The day you were born is the best thing that ever happened to this
+            world — and to me. Every year I get to spend beside you is a gift I
+            never take for granted. You make ordinary days feel like magic and
+            magical days feel like dreams.
+          </p>
+          <p class="msg-body">
+            These flowers are a tiny token of the enormous love I carry for you.
+            No bouquet in the world is big enough, no song sweet enough, no poem
+            long enough — but know that every single one is yours. Happy
+            Birthday, my love. 🎂
+          </p>
+          <div class="msg-signature">— Yours, always &amp; forever 🌹</div>
+        </div>
+      </div>
+      <div class="section-petals">
+        <div class="s-petal sp1">🌸</div>
+        <div class="s-petal sp2">🌺</div>
+        <div class="s-petal sp3">🌼</div>
+        <div class="s-petal sp4">🌸</div>
+        <div class="s-petal sp5">🌷</div>
+      </div>
+    </section>
+
+    <!-- ===== REASONS ===== -->
+    <section id="reasons">
+      <div class="section-inner">
+        <p class="section-eyebrow">a thousand birthday wishes</p>
+        <h2 class="section-title">What I Celebrate About You</h2>
+        <div class="reasons-grid">
+          <div class="reason-card glass reveal-card">
+            <div class="reason-icon">🌹</div>
+            <h3>Your Smile</h3>
+            <p>
+              The one that made me fall — and still does, every single day.
+              Happy birthday to that smile.
+            </p>
+          </div>
+          <div class="reason-card glass reveal-card delay1">
+            <div class="reason-icon">💫</div>
+            <h3>Your Soul</h3>
+            <p>
+              Rare, luminous, and more precious than anything this world has to
+              offer. I'm so lucky it's mine.
+            </p>
+          </div>
+          <div class="reason-card glass reveal-card delay2">
+            <div class="reason-icon">🌸</div>
+            <h3>Your Kindness</h3>
+            <p>
+              The way you love and care for everyone around you makes this world
+              a softer, better place.
+            </p>
+          </div>
+          <div class="reason-card glass reveal-card delay3">
+            <div class="reason-icon">✨</div>
+            <h3>Your Laughter</h3>
+            <p>
+              My favourite sound in the universe. May today be filled with
+              endless reasons to laugh.
+            </p>
+          </div>
+          <div class="reason-card glass reveal-card delay4">
+            <div class="reason-icon">🌺</div>
+            <h3>Your Strength</h3>
+            <p>
+              You've walked through storms with such grace. I admire you more
+              with every passing year.
+            </p>
+          </div>
+          <div class="reason-card glass reveal-card delay5">
+            <div class="reason-icon">💖</div>
+            <h3>Simply You</h3>
+            <p>
+              Every version of you, on every birthday — you are more than
+              enough. You are everything.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== GARDEN ===== -->
+    <section id="garden">
+      <div class="garden-bg"></div>
+      <div class="section-inner">
+        <p class="section-eyebrow">your birthday garden</p>
+        <h2 class="section-title garden-title">
+          A Garden Blooming<br /><em>Just For You Today</em>
+        </h2>
+        <div class="flower-garden">
+          <div class="garden-flower gf1">
+            <div class="gf-bloom">🌹</div>
+            <div class="gf-stem"></div>
+            <div class="gf-tooltip glass">
+              <strong>Rose</strong><span>May love surround you always</span>
+            </div>
+          </div>
+          <div class="garden-flower gf2">
+            <div class="gf-bloom">🌸</div>
+            <div class="gf-stem"></div>
+            <div class="gf-tooltip glass">
+              <strong>Cherry Blossom</strong
+              ><span>May today be as soft as you</span>
+            </div>
+          </div>
+          <div class="garden-flower gf3">
+            <div class="gf-bloom">🪷</div>
+            <div class="gf-stem"></div>
+            <div class="gf-tooltip glass">
+              <strong>Lotus</strong><span>May you bloom in all your glory</span>
+            </div>
+          </div>
+          <div class="garden-flower gf4">
+            <div class="gf-bloom">🌺</div>
+            <div class="gf-stem"></div>
+            <div class="gf-tooltip glass">
+              <strong>Hibiscus</strong><span>May passion light your path</span>
+            </div>
+          </div>
+          <div class="garden-flower gf5">
+            <div class="gf-bloom">🌼</div>
+            <div class="gf-stem"></div>
+            <div class="gf-tooltip glass">
+              <strong>Daisy</strong><span>May joy follow you everywhere</span>
+            </div>
+          </div>
+          <div class="garden-flower gf6">
+            <div class="gf-bloom">🌷</div>
+            <div class="gf-stem"></div>
+            <div class="gf-tooltip glass">
+              <strong>Tulip</strong><span>May all your wishes come true</span>
+            </div>
+          </div>
+          <div class="garden-flower gf7">
+            <div class="gf-bloom">🌻</div>
+            <div class="gf-stem"></div>
+            <div class="gf-tooltip glass">
+              <strong>Sunflower</strong><span>May your year shine bright</span>
+            </div>
+          </div>
+        </div>
+        <p class="garden-note">
+          🎂 hover each flower — a birthday wish is hiding inside ✨
+        </p>
+      </div>
+    </section>
+
+    <!-- ===== MEMORIES ===== -->
+    <section id="memories">
+      <div class="section-inner">
+        <p class="section-eyebrow">captured in time</p>
+        <h2 class="section-title">Your Beautiful<br /><em>Pictures</em></h2>
+        <div class="gallery-grid">
+          <div class="gallery-card glass gc1">
+            <img
+              src="./assets/images/img1.jpeg"
+              class="gallery-img"
+              alt="Photo 1"
+            />
+            <div class="gallery-caption">you</div>
+          </div>
+          <div class="gallery-card glass gc2">
+            <img
+              src="./assets/images/img2.jpeg"
+              class="gallery-img"
+              alt="Photo 2"
+            />
+            <div class="gallery-caption">are</div>
+          </div>
+          <div class="gallery-card glass gc3">
+            <img
+              src="./assets/images/img3.jpeg"
+              class="gallery-img"
+              alt="Photo 3"
+            />
+            <div class="gallery-caption">so</div>
+          </div>
+          <div class="gallery-card glass gc4">
+            <img
+              src="./assets/images/img4.jpeg"
+              class="gallery-img"
+              alt="Photo 4"
+            />
+            <div class="gallery-caption">beautiful</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== FINALE ===== -->
+    <section id="finale">
+      <canvas id="finale-canvas"></canvas>
+      <div class="finale-inner">
+        <div class="finale-flowers">
+          <span class="ff">🌸</span><span class="ff delay1">🌺</span
+          ><span class="ff delay2">🌹</span><span class="ff delay3">🌸</span
+          ><span class="ff delay4">🌷</span>
+        </div>
+        <p class="finale-eyebrow">happy birthday, my love 🎂</p>
+        <h2 class="finale-title">
+          You Are Loved<br /><em>More Than You Know</em>
+        </h2>
+        <p class="finale-body">
+          On this beautiful day that belongs entirely to you — I want you to
+          know that loving you is the greatest adventure of my life. Every year
+          with you is a gift I treasure. Every laugh, every moment, every quiet
+          heartbeat beside yours. Here's to you, today and every day after.
+          Happy Birthday, my love. 🌸
+        </p>
+        <div class="finale-heart"><div class="heart-pulse">💗</div></div>
+        <p class="finale-sig">Made with endless love, just for you 🎂🌸</p>
+      </div>
+    </section>
+
+    <footer><p>🎂 crafted with love &amp; birthday petals 🌸</p></footer>
+
+    <!-- Scripts — tier already set in <head>; engine files load in dependency order -->
+    <script src="./assets/js/render-loop.js"></script>
+    <script src="./assets/js/particle-pool.js"></script>
+    <script src="./assets/js/performance-manager.js"></script>
+    <script src="./assets/js/canvas-flower-engine.js"></script>
+    <script src="./assets/js/particles.js"></script>
+    <script src="./assets/js/audio-system.js"></script>
+    <script src="./assets/js/intro.js"></script>
+    <script src="./assets/js/main.js"></script>
+
+    <div id="cp-root" role="region" aria-label="Music Player">
+      <!-- Ambient blurred bg from cover -->
+      <div class="cp-bg-blur">
+        <img
+          class="cp-bg-img"
+          src="https://happybirthdaycintakuuu.vercel.app/"
+          alt=""
+          aria-hidden="true"
+        />
+      </div>
+
+      <!-- Animated border gradient ring -->
+      <div class="cp-border-ring" aria-hidden="true"></div>
+
+      <!-- Cinematic shine sweep -->
+      <div class="cp-shine" aria-hidden="true"></div>
+
+      <!-- Mouse-reactive lighting orb -->
+      <div class="cp-light-orb" aria-hidden="true"></div>
+
+      <!-- Inner card -->
+      <div class="cp-card">
+        <!-- Cover art — 3:4 portrait -->
+        <div class="cp-cover-wrap">
+          <img
+            class="cp-cover"
+            src="https://happybirthdaycintakuuu.vercel.app/"
+            alt="Album cover"
+          />
+          <div class="cp-cover-overlay"></div>
+          <!-- Visualizer bars over cover -->
+          <canvas
+            class="cp-viz"
+            width="120"
+            height="36"
+            aria-hidden="true"
+          ></canvas>
+        </div>
+
+        <!-- Info + controls -->
+        <div class="cp-body">
+          <!-- Track info -->
+          <div class="cp-info">
+            <p class="cp-title">♪ Loading…</p>
+            <p class="cp-artist"></p>
+          </div>
+
+          <!-- Progress bar -->
+          <div
+            class="cp-progress-wrap"
+            role="progressbar"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow="0"
+          >
+            <div class="cp-progress-track">
+              <div class="cp-progress-fill" style="width: 0%"></div>
+              <div class="cp-progress-dot" style="left: 0%"></div>
+            </div>
+            <div class="cp-times">
+              <span class="cp-time-cur">0:00</span>
+              <span class="cp-time-dur">0:00</span>
+            </div>
+          </div>
+
+          <!-- Controls -->
+          <div class="cp-controls">
+            <button class="cp-btn cp-prev-btn" aria-label="Previous track">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M6 6h2v12H6V6zm3.5 6 8.5 5V7L9.5 12z"></path>
+              </svg>
+            </button>
+            <button class="cp-btn cp-play-btn" aria-label="Play or pause">
+              <svg class="cp-icon-play" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M8 5v14l11-7L8 5z"></path>
+              </svg>
+              <svg
+                class="cp-icon-pause cp-hidden"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"></path>
+              </svg>
+            </button>
+            <button class="cp-btn cp-next-btn" aria-label="Next track">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"></path>
+              </svg>
+            </button>
+          </div>
+
+          <!-- Volume -->
+          <div class="cp-vol-row">
+            <svg
+              class="cp-vol-icon"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path
+                d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0 0 14 7.97v8.05c1.48-.73 2.5-2.25 2.5-4.02z"
+              ></path>
+            </svg>
+            <div class="cp-vol-track">
+              <div class="cp-vol-fill"></div>
+              <input
+                type="range"
+                class="cp-vol-input"
+                min="0"
+                max="100"
+                value="75"
+                aria-label="Volume"
+              />
+            </div>
+          </div>
+        </div>
+        <!-- /cp-body -->
+      </div>
+      <!-- /cp-card -->
+
+      <!-- Minimise toggle -->
+      <button class="cp-mini-btn" aria-label="Toggle player size">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M19 13H5v-2h14v2z"></path>
+        </svg>
+      </button>
+
+      <!-- Fallback tap notice -->
+      <div class="cp-fallback cp-hidden">
+        <span>♪ Tap to play music</span>
+      </div>
+    </div>
+    <button
+      id="cp-toggle-btn"
+      aria-label="Toggle music player"
+      aria-expanded="false"
+    >
+      <!-- Musical note icon -->
+      <svg
+        class="cp-toggle-icon cp-icon-note"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        aria-hidden="true"
+      >
+        <path
+          d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"
+        ></path>
+      </svg>
+      <!-- Close X icon -->
+      <svg
+        class="cp-toggle-icon cp-icon-close"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        aria-hidden="true"
+      >
+        <path
+          d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+        ></path>
+      </svg></button
+    ><veepn-lock-screen
+      ><template shadowrootmode="open"
+        ><style>
+          html {
+            box-sizing: border-box;
+            text-size-adjust: 100%;
+            word-break: normal;
+            tab-size: 4;
+          }
+          *,
+          :before,
+          :after {
+            background-repeat: no-repeat;
+            box-sizing: border-box;
+          }
+          :before,
+          :after {
+            text-decoration: inherit;
+            vertical-align: inherit;
+          }
+          * {
+            padding: 0;
+            margin: 0;
+          }
+          hr {
+            overflow: visible;
+            height: 0;
+            color: inherit;
+            border: 0;
+            border-top: 1px solid;
+          }
+          details,
+          main {
+            display: block;
+          }
+          summary {
+            display: list-item;
+          }
+          small {
+            font-size: 80%;
+          }
+          [hidden] {
+            display: none !important;
+          }
+          abbr[title] {
+            border-bottom: none;
+            text-decoration: underline;
+            text-decoration: underline dotted;
+          }
+          a {
+            background-color: transparent;
+          }
+          a:active,
+          a:hover {
+            outline-width: 0;
+          }
+          code,
+          kbd,
+          pre,
+          samp {
+            font-family: monospace;
+          }
+          pre {
+            font-size: 1em;
+          }
+          b,
+          strong {
+            font-weight: bolder;
+          }
+          sub,
+          sup {
+            font-size: 75%;
+            line-height: 0;
+            position: relative;
+            vertical-align: baseline;
+          }
+          sub {
+            bottom: -0.25em;
+          }
+          sup {
+            top: -0.5em;
+          }
+          table {
+            border-color: inherit;
+            text-indent: 0;
+          }
+          iframe {
+            border-style: none;
+          }
+          input {
+            border-radius: 0;
+          }
+          [type="number"]::-webkit-inner-spin-button,
+          [type="number"]::-webkit-outer-spin-button {
+            height: auto;
+          }
+          [type="search"] {
+            appearance: textfield;
+            outline-offset: -2px;
+          }
+          [type="search"]::-webkit-search-decoration {
+            appearance: none;
+          }
+          textarea {
+            overflow: auto;
+            resize: vertical;
+          }
+          button,
+          input,
+          optgroup,
+          select,
+          textarea {
+            font: inherit;
+            color: inherit;
+          }
+          optgroup {
+            font-weight: 700;
+          }
+          button {
+            overflow: visible;
+          }
+          button,
+          select {
+            text-transform: none;
+          }
+          button,
+          [type="button"],
+          [type="reset"],
+          [type="submit"],
+          [role="button"] {
+            cursor: pointer;
+          }
+          button::-moz-focus-inner,
+          [type="button"]::-moz-focus-inner,
+          [type="reset"]::-moz-focus-inner,
+          [type="submit"]::-moz-focus-inner {
+            border-style: none;
+            padding: 0;
+          }
+          button,
+          html [type="button"],
+          [type="reset"],
+          [type="submit"] {
+            appearance: auto;
+          }
+          button,
+          input,
+          select,
+          textarea {
+            background-color: transparent;
+            border-style: none;
+          }
+          button:-moz-focusring,
+          [type="button"]::-moz-focus-inner,
+          [type="reset"]::-moz-focus-inner,
+          [type="submit"]::-moz-focus-inner {
+            outline: 1px dotted ButtonText;
+          }
+          select {
+            appearance: none;
+          }
+          a:focus,
+          button:focus,
+          input:focus,
+          select:focus,
+          textarea:focus {
+            outline-width: 0;
+          }
+          select::-ms-expand {
+            display: none;
+          }
+          select::-ms-value {
+            color: currentcolor;
+          }
+          legend {
+            border: 0;
+            color: inherit;
+            display: table;
+            white-space: normal;
+            max-width: 100%;
+          }
+          ::-webkit-file-upload-button {
+            appearance: auto;
+            color: inherit;
+            font: inherit;
+          }
+          [disabled] {
+            cursor: default;
+          }
+          img {
+            border-style: none;
+          }
+          progress {
+            vertical-align: baseline;
+          }
+          [aria-busy="true"] {
+            cursor: progress;
+          }
+          [aria-controls] {
+            cursor: pointer;
+          }
+          [aria-disabled="true"] {
+            cursor: default;
+          }
+          ul,
+          ol {
+            list-style-type: none;
+          }
+          figure {
+            margin: 0;
+          }
+          @keyframes slide-in {
+            0% {
+              opacity: 0;
+              transform: translateY(16px);
+            }
+            to {
+              opacity: 1;
+              transform: translateY(0);
+            }
+          }
+          .gradient-blue {
+            background: radial-gradient(
+              106.41% 128.47% at 50.15% 128.47%,
+              #23abff,
+              #3066ff
+            );
+          }
+          .gradient-green {
+            background: radial-gradient(
+              92.26% 118.88% at 50.15% 0.13%,
+              #00c3c3,
+              #00aab3
+            );
+          }
+          .gradient-purple {
+            background: radial-gradient(
+              165.12% 115.56% at 50.15% 0.13%,
+              #a15aff,
+              #00a0eb
+            );
+          }
+          .bg-blue {
+            background-color: #f2f5ff;
+          }
+          .bg-purple {
+            background-color: #f7f0ff;
+          }
+          .bg-green {
+            background-color: #ebffed;
+          }
+          .lock-screen {
+            font-family: FigtreeVF, sans-serif;
+            letter-spacing: normal;
+            position: fixed;
+            z-index: 2147483638;
+            right: 24px;
+            bottom: 24px;
+            width: 327px;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 24px 32px #00000014;
+            animation: slide-in 0.3s ease-in-out forwards;
+          }
+          .lock-screen__content {
+            position: relative;
+            padding: 24px 24px 64px;
+          }
+          .lock-screen__close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.5;
+          }
+          .lock-screen__label {
+            height: 26px;
+            width: fit-content;
+            border-radius: 50px;
+            background-color: #fff3;
+            padding-inline: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: #fff;
+            font-size: 12px;
+            line-height: 18px;
+            margin: -8px auto 16px;
+          }
+          .lock-screen__title {
+            color: #fff;
+            text-align: center;
+            font-size: 20px;
+            line-height: 28px;
+            font-weight: 600;
+            margin-bottom: 8px;
+          }
+          .lock-screen__description {
+            color: #f5f6f7;
+            text-align: center;
+            font-size: 14px;
+            line-height: 20px;
+          }
+          .lock-screen__description b {
+            font-weight: 600;
+          }
+          .lock-screen__card {
+            position: relative;
+            z-index: 1;
+            margin-top: -44px;
+            background-color: #fff;
+            border-radius: 24px;
+            padding: 32px 20px 20px;
+          }
+          .lock-screen__inner {
+            margin-bottom: 24px;
+          }
+          .lock-screen__submit {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 16px;
+            height: 40px;
+            width: 100%;
+            border-radius: 12px;
+            padding-inline: 16px;
+            background-color: #f70;
+            color: #fff;
+            margin-bottom: 16px;
+          }
+          .lock-screen__skip {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            line-height: 20px;
+            color: #82829c;
+            margin-inline: auto;
+          }
+          .price-card {
+            border: 1px solid #f2f2fc;
+            background: linear-gradient(
+              254.14deg,
+              #fafbff 0.04%,
+              #f5f8ff 100.04%
+            );
+            border-radius: 24px;
+            padding: 24px 28px;
+          }
+          .price-card__label {
+            color: #4a5764;
+            text-align: center;
+            font-size: 14px;
+            line-height: 20px;
+            text-transform: uppercase;
+            margin-bottom: 16px;
+          }
+          .price-card__price {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            column-gap: 2px;
+            margin-bottom: 12px;
+          }
+          .price-card__currency {
+            color: #515478;
+            font-size: 18px;
+            line-height: 28px;
+          }
+          .price-card__number {
+            color: #14142a;
+            text-align: center;
+            font-size: 64px;
+            line-height: 54px;
+          }
+          .price-card__wrap {
+            display: flex;
+            flex-direction: column;
+          }
+          .price-card__decimal {
+            color: #515478;
+            font-size: 18px;
+            line-height: 28px;
+            font-weight: 600;
+          }
+          .price-card__period {
+            color: #515478;
+            font-size: 14px;
+            line-height: 20px;
+            margin-top: -6px;
+          }
+          .price-card__discount {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 12px;
+          }
+          .price-card__discount-divider {
+            position: absolute;
+            z-index: 0;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background-color: #dbe2f9;
+            transform: translateY(-50%);
+          }
+          .price-card__discount-icon {
+            position: absolute;
+            z-index: 1;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+          }
+          .price-card__discount-text {
+            position: relative;
+            z-index: 2;
+            color: #fff;
+            font-size: 12px;
+            font-weight: 600;
+            line-height: 18px;
+          }
+          .price-card__features {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            column-gap: 16px;
+          }
+          .price-card__feature {
+            color: #222e3a;
+            font-size: 14px;
+            line-height: 20px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+          }
+          .price-card__feature:before {
+            content: "";
+            display: block;
+            width: 4px;
+            height: 4px;
+            background-color: #20df9e;
+            border-radius: 50%;
+            flex-shrink: 0;
+          }
+          .features-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+          }
+          .features-list__item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+          }
+          .features-list__icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+          .features-list__text {
+            color: #293a53;
+            text-align: center;
+            font-size: 16px;
+            line-height: 24px;
+            letter-spacing: -0.1px;
+          }
+        </style></template
+      ><style>
+        @font-face {
+          font-family: FigtreeVF;
+          src:
+            url(chrome-extension://panammoooggmlehahpcjckcncfeffcoi/fonts/FigtreeVF.woff2)
+              format("woff2 supports variations"),
+            url(chrome-extension://panammoooggmlehahpcjckcncfeffcoi/fonts/FigtreeVF.woff2)
+              format("woff2-variations");
+          font-weight: 100 1000;
+          font-display: swap;
+        }
+      </style></veepn-lock-screen
+    >
+  </body>
+</html>
