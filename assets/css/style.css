@@ -31,9 +31,9 @@ html {
   --glass-border: rgba(255, 255, 255, 0.4);
   --shadow: rgba(220, 130, 160, 0.25);
   --glow: rgba(248, 182, 210, 0.55);
-  --ff-display: "Cormorant Garamond", serif;
-  --ff-script: "Petit Formal Script", cursive;
-  --ff-body: "Jost", sans-serif;
+  --ff-display: 'Cormorant Garamond', serif;
+  --ff-script: 'Petit Formal Script', cursive;
+  --ff-body: 'Jost', sans-serif;
 }
 
 html {
@@ -132,6 +132,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  --gift-size: 180px;
 }
 
 #gift-container {
@@ -155,9 +156,11 @@ body {
 }
 
 #gift-box {
-  width: 160px;
-  height: 160px;
+  width: var(--gift-size);
+  height: var(--gift-size);
+  aspect-ratio: 9 / 8;
   position: relative;
+  padding: 0;
   filter: drop-shadow(0 0 20px rgba(255, 120, 160, 0.5));
   transition: filter 0.3s ease;
   will-change: transform, filter;
@@ -167,11 +170,23 @@ body {
 .gift-lid {
   position: absolute;
   top: 0;
-  left: -8px;
-  width: 176px;
-  height: 55px;
-  background: linear-gradient(135deg, #e8698a, #c0304a);
-  border-radius: 8px 8px 0 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(
+      circle at 32% 30%,
+      rgba(255, 255, 255, 0.32),
+      transparent 22%
+    ),
+    radial-gradient(
+      circle at 68% 30%,
+      rgba(255, 255, 255, 0.24),
+      transparent 22%
+    ),
+    linear-gradient(155deg, #ff9db8 0%, #e8698a 22%, #c93d5c 62%, #94213f 100%);
+  clip-path: url(#heart-clip);
+  -webkit-clip-path: url(#heart-clip);
   z-index: 2;
   display: flex;
   align-items: center;
@@ -179,20 +194,35 @@ body {
   transition:
     transform 0.8s cubic-bezier(0.34, 1.56, 0.64, 1),
     opacity 0.5s ease;
-  transform-origin: top center;
+  transform-origin: 50% 58%;
   backface-visibility: hidden;
   will-change: transform, opacity;
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.35),
+    inset 0 -10px 18px rgba(90, 10, 32, 0.28);
 }
 
 .gift-body {
   position: absolute;
-  bottom: 0;
+  top: 0;
   left: 0;
-  width: 160px;
-  height: 115px;
-  background: linear-gradient(160deg, #d44a6a, #a02040);
-  border-radius: 0 0 12px 12px;
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(
+      circle at 44% 38%,
+      rgba(255, 255, 255, 0.12),
+      transparent 24%
+    ),
+    linear-gradient(165deg, #d94d6f 0%, #b72f4e 34%, #8f1d38 100%);
+  clip-path: url(#heart-clip);
+  -webkit-clip-path: url(#heart-clip);
   overflow: hidden;
+  transform: translate3d(0, 8px, -14px) scale(0.985);
+  border-radius: 0;
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, 0.18),
+    inset 0 -14px 22px rgba(0, 0, 0, 0.22);
 }
 
 .ribbon-h {
@@ -203,6 +233,7 @@ body {
   height: 14px;
   background: linear-gradient(90deg, #f7c873, #f4a840, #f7c873);
   transform: translateY(-50%);
+  display: none;
 }
 .ribbon-v {
   position: absolute;
@@ -212,11 +243,13 @@ body {
   height: 100%;
   background: linear-gradient(180deg, #f7c873, #f4a840, #f7c873);
   transform: translateX(-50%);
+  display: none;
 }
 .ribbon-body-h,
 .ribbon-body-v {
   position: absolute;
   background: linear-gradient(90deg, #f7c873, #f4a840, #f7c873);
+  display: none;
 }
 .ribbon-body-h {
   top: 50%;
@@ -235,9 +268,10 @@ body {
 
 .bow {
   position: absolute;
-  top: -18px;
+  top: 2px;
   left: 50%;
   transform: translateX(-50%);
+  display: none;
 }
 .bow-left,
 .bow-right {
@@ -246,7 +280,8 @@ body {
   height: 22px;
   background: linear-gradient(135deg, #f7e080, #e4a020);
   border-radius: 50%;
-  top: 0;
+  top: 4px;
+  display: none;
 }
 .bow-left {
   left: -28px;
@@ -262,9 +297,16 @@ body {
   height: 16px;
   background: #f7c873;
   border-radius: 50%;
+  .gift-lid::before,
+  .gift-lid::after,
+  .gift-body::before,
+  .gift-body::after {
+    content: none;
+  }
   top: 3px;
   left: -2px;
   z-index: 1;
+  display: none;
 }
 
 .gift-hint {
@@ -907,6 +949,14 @@ section {
 #memories {
   padding: 80px 20px;
 }
+.gallery-sub {
+  font-size: 1.05rem;
+  font-weight: 200;
+  color: var(--text-mid);
+  letter-spacing: 0.02em;
+  max-width: 480px;
+  margin: -30px auto 40px;
+}
 .gallery-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -1119,6 +1169,22 @@ footer {
    RESPONSIVE
    =========================== */
 @media (max-width: 700px) {
+  #gift-wrapper {
+    --gift-size: clamp(132px, 50vw, 164px);
+  }
+  #gift-box {
+    padding: 12px;
+    filter: drop-shadow(0 16px 14px rgba(0, 0, 0, 0.38))
+      drop-shadow(0 0 22px rgba(255, 120, 160, 0.38));
+  }
+  .gift-body {
+    transform: translate3d(0, 6px, -10px) scale(0.985);
+  }
+  #gift-container::after {
+    width: min(76vw, 132px);
+    height: 18px;
+    bottom: -10px;
+  }
   .message-card {
     padding: 40px 24px;
   }
@@ -1130,13 +1196,6 @@ footer {
   }
   .gf-bloom {
     font-size: 2.5rem;
-  }
-  #gift-box {
-    width: 130px;
-    height: 130px;
-  }
-  .gift-lid {
-    width: 146px;
   }
   .reasons-grid {
     grid-template-columns: 1fr;
@@ -1218,35 +1277,37 @@ footer {
   box-shadow:
     inset 0 2px 0 rgba(255, 255, 255, 0.35),
     inset 0 -2px 0 rgba(0, 0, 0, 0.25);
+  transform: translateZ(22px);
 }
 
 /* Lid right-side face — 3D illusion panel */
 .gift-lid::after {
-  content: "";
+  content: '';
   position: absolute;
-  right: -10px;
-  top: 4px;
-  width: 10px;
-  height: calc(100% - 4px);
+  right: 10px;
+  top: 16px;
+  width: 22px;
+  height: calc(100% - 26px);
   background: linear-gradient(180deg, #8a1a2e, #6a0f22);
   transform-origin: left center;
-  transform: rotateY(90deg) translateZ(0);
-  border-radius: 0 4px 4px 0;
+  transform: skewY(12deg) translateZ(-1px);
+  border-radius: 12px;
   box-shadow: inset -2px 0 4px rgba(0, 0, 0, 0.3);
+  opacity: 0.85;
 }
 
 /* Lid bottom-face shadow panel */
 .gift-lid::before {
-  content: "";
+  content: '';
   position: absolute;
-  bottom: -8px;
-  left: 4px;
-  width: calc(100% - 8px);
-  height: 8px;
+  bottom: 12px;
+  left: 14px;
+  width: calc(100% - 28px);
+  height: 12px;
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.08));
-  transform: rotateX(-90deg);
+  transform: translateZ(-6px);
   transform-origin: top center;
-  border-radius: 0 0 4px 4px;
+  border-radius: 999px;
   filter: blur(1px);
 }
 
@@ -1268,27 +1329,28 @@ footer {
 
 /* Body right-side face */
 .gift-body::after {
-  content: "";
+  content: '';
   position: absolute;
-  right: -10px;
+  right: 10px;
   top: 0;
-  width: 10px;
+  width: 22px;
   height: 100%;
   background: linear-gradient(180deg, #7a1228 0%, #5a0c1e 100%);
-  border-radius: 0 0 4px 0;
+  border-radius: 0 28px 28px 0;
   box-shadow: inset -2px 0 4px rgba(0, 0, 0, 0.4);
+  opacity: 0.8;
 }
 
 /* Body bottom face — ground contact shadow */
 .gift-body::before {
-  content: "";
+  content: '';
   position: absolute;
-  bottom: -10px;
-  left: 6px;
-  width: calc(100% - 12px);
-  height: 10px;
+  bottom: 8px;
+  left: 14px;
+  width: calc(100% - 28px);
+  height: 14px;
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.35), transparent);
-  border-radius: 0 0 8px 8px;
+  border-radius: 999px;
   filter: blur(2px);
 }
 
@@ -1332,17 +1394,65 @@ footer {
 
 /* Ground reflection/shadow ellipse */
 #gift-container::after {
-  content: "";
+  content: '';
   position: absolute;
-  bottom: -24px;
+  bottom: -18px;
   left: 50%;
   transform: translateX(-50%);
-  width: 120px;
-  height: 18px;
-  background: radial-gradient(ellipse, rgba(0, 0, 0, 0.35) 0%, transparent 70%);
+  width: 150px;
+  height: 26px;
+  background: radial-gradient(ellipse, rgba(0, 0, 0, 0.42) 0%, transparent 72%);
   border-radius: 50%;
   filter: blur(4px);
   pointer-events: none;
+}
+
+/* Heart-only mode: remove the box cues and keep a single 3D love shape */
+.gift-lid,
+.gift-body {
+  clip-path: url(#heart-clip);
+  -webkit-clip-path: url(#heart-clip);
+}
+
+.gift-lid {
+  background:
+    radial-gradient(
+      circle at 33% 28%,
+      rgba(255, 255, 255, 0.38),
+      transparent 18%
+    ),
+    radial-gradient(
+      circle at 68% 28%,
+      rgba(255, 255, 255, 0.18),
+      transparent 18%
+    ),
+    linear-gradient(155deg, #ffb0c7 0%, #e8698a 28%, #bb3554 68%, #8a1a35 100%) !important;
+}
+
+.gift-body {
+  transform: translate3d(0, 8px, -14px) scale(0.985);
+  background:
+    radial-gradient(
+      circle at 45% 38%,
+      rgba(255, 255, 255, 0.16),
+      transparent 22%
+    ),
+    radial-gradient(circle at 50% 78%, rgba(0, 0, 0, 0.22), transparent 24%),
+    linear-gradient(165deg, #db5a7c 0%, #ba3252 38%, #8f1d38 100%) !important;
+}
+
+.gift-lid::before,
+.gift-lid::after,
+.gift-body::before,
+.gift-body::after {
+  content: none;
+}
+
+#gift-container::after {
+  width: 132px;
+  height: 22px;
+  bottom: -12px;
+  background: radial-gradient(ellipse, rgba(0, 0, 0, 0.34) 0%, transparent 72%);
 }
 
 /* Lid fly — preserve 3D depth during open animation */

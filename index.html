@@ -86,7 +86,7 @@
 
       /* Pulsing ring when playing */
       #cp-toggle-btn.cp-is-playing::after {
-        content: "";
+        content: '';
         position: absolute;
         inset: -4px;
         border-radius: 50%;
@@ -214,7 +214,7 @@
         animation: cp-ring-spin 4s linear infinite paused;
       }
       @property --cp-angle {
-        syntax: "<angle>";
+        syntax: '<angle>';
         inherits: false;
         initial-value: 0deg;
       }
@@ -346,7 +346,7 @@
         text-align: center;
       }
       .cp-title {
-        font-family: "Cormorant Garamond", "Georgia", serif;
+        font-family: 'Cormorant Garamond', 'Georgia', serif;
         font-size: 13px;
         font-weight: 600;
         color: rgba(255, 235, 245, 0.95);
@@ -357,7 +357,7 @@
         text-overflow: ellipsis;
       }
       .cp-artist {
-        font-family: "Jost", "Helvetica Neue", sans-serif;
+        font-family: 'Jost', 'Helvetica Neue', sans-serif;
         font-size: 10px;
         font-weight: 300;
         color: rgba(255, 160, 190, 0.5);
@@ -410,7 +410,7 @@
         display: flex;
         justify-content: space-between;
         margin-top: 5px;
-        font-family: "Jost", monospace;
+        font-family: 'Jost', monospace;
         font-size: 9px;
         font-weight: 300;
         color: rgba(255, 150, 180, 0.38);
@@ -575,7 +575,7 @@
         background: rgba(8, 2, 14, 0.88);
         border-radius: inherit;
         cursor: pointer;
-        font-family: "Cormorant Garamond", serif;
+        font-family: 'Cormorant Garamond', serif;
         font-style: italic;
         font-size: 12px;
         color: rgba(255, 180, 210, 0.8);
@@ -614,6 +614,16 @@
     </style>
   </head>
   <body style="cursor: auto">
+    <!-- Scalable heart clip-path (objectBoundingBox = scales with element size, fixes mobile crop) -->
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+      <defs>
+        <clipPath id="heart-clip" clipPathUnits="objectBoundingBox">
+          <path
+            d="M 0.5 1.0 C 0.422222 0.9125 0.322222 0.8375 0.222222 0.7375 C 0.1 0.6125 0.0 0.4625 0.0 0.3 C 0.0 0.13125 0.116667 0.0 0.266667 0.0 C 0.372222 0.0 0.444444 0.0625 0.5 0.15625 C 0.555556 0.0625 0.627778 0.0 0.733333 0.0 C 0.883333 0.0 1.0 0.13125 1.0 0.3 C 1.0 0.4625 0.9 0.6125 0.777778 0.7375 C 0.677778 0.8375 0.577778 0.9125 0.5 1.0 Z"
+          ></path>
+        </clipPath>
+      </defs>
+    </svg>
     <!-- ===== GLOBAL CINEMATIC BACKGROUND (fixed, z=-10, one unified layer) ===== -->
     <div id="global-bg-layer" aria-hidden="true"></div>
 
@@ -642,7 +652,7 @@
               <div class="ribbon-body-v" style="cursor: pointer"></div>
             </div>
           </div>
-          <p class="gift-hint">🎂 tap to open your gift ✨</p>
+          <p class="gift-hint">🎂 kado buat kamu, sayang ✨</p>
         </div>
         <div id="bloom-container"></div>
       </div>
@@ -972,14 +982,14 @@
       <!-- ===== HERO ===== -->
       <section id="hero">
         <div class="hero-content">
-          <p class="hero-eyebrow">a birthday serenade in bloom</p>
+          <p class="hero-eyebrow">🌹🌸🌺<br />For Your Special Day</p>
           <h1 class="hero-title">
-            <span class="line1">Happy Birthday,</span>
-            <span class="line2 italic">My Everything</span>
+            <span class="line1">Happy Birthday</span>
+            <span class="line2 italic">Shandy Sayang 🤍</span>
           </h1>
           <p class="hero-sub">
-            Today the whole universe is celebrating the day you were born into
-            my world.
+            Hari ini adalah hari yang paling spesial, karena di hari inilah
+            seseorang yang berhasil membuat duniaku jadi lebih berwarna.
           </p>
           <div class="hero-flowers">
             <svg
@@ -1054,8 +1064,10 @@
             href="https://happybirthdaycintakuuu.vercel.app/#message"
             class="scroll-btn"
           >
-            <span>Discover your birthday surprise</span>
-            <div class="scroll-arrow">↓</div>
+            <span
+              >Scroll pelan-pelan ya, aku udah siapin sesuatu buat kamu.</span
+            >
+            <div class="scroll-arrow">↓ 🌸</div>
           </a>
         </div>
       </section>
@@ -1070,23 +1082,32 @@
             <span class="inline-flower delay1">🌺</span>
             <span class="inline-flower delay2">🌸</span>
           </div>
-          <p class="msg-label">from the bottom of my heart</p>
-          <h2 class="msg-title">
-            Today is the day<br /><em>the world became</em><br />more beautiful.
-          </h2>
+          <p class="msg-label">From The Bottom of My Heart</p>
+          <h2 class="msg-title">Selamat ulang tahun yaa. 🤍</h2>
           <p class="msg-body">
-            The day you were born is the best thing that ever happened to this
-            world — and to me. Every year I get to spend beside you is a gift I
-            never take for granted. You make ordinary days feel like magic and
-            magical days feel like dreams.
+            Semoga di usia yang baru ini, semua hal baik pelan-pelan datang ke
+            hidup kamu. Semoga kesehatan selalu menyertai, rezekinya makin
+            lancar, langkahmu selalu dimudahkan, dan semua doa yang selama ini
+            kamu simpan bisa satu per satu terwujud.
           </p>
           <p class="msg-body">
-            These flowers are a tiny token of the enormous love I carry for you.
-            No bouquet in the world is big enough, no song sweet enough, no poem
-            long enough — but know that every single one is yours. Happy
-            Birthday, my love. 🎂
+            Terima kasih ya, karena tanpa sadar kamu udah membawa banyak warna
+            dalam hidupku. Terima kasih sudah menjadi seseorang yang selalu
+            berhasil bikin hari-hariku terasa lebih menyenangkan.
           </p>
-          <div class="msg-signature">— Yours, always &amp; forever 🌹</div>
+          <p class="msg-body">
+            Aku mungkin belum bisa kasih hadiah yang luar biasa, tapi aku harap
+            halaman kecil ini bisa bikin kamu senyum.
+          </p>
+          <p class="msg-body">
+            Hari ini, jangan terlalu banyak mikirin hal-hal yang bikin capek.
+            Nikmati harinya, makan makanan favoritmu, ketawa yang banyak, dan
+            jadi orang paling bahagia.
+          </p>
+          <div class="msg-signature">
+            Happy Birthday.<br />Semoga tahun ini menjadi tahun terbaik buat
+            kamu. 🌸
+          </div>
         </div>
       </div>
       <div class="section-petals">
@@ -1101,55 +1122,56 @@
     <!-- ===== REASONS ===== -->
     <section id="reasons">
       <div class="section-inner">
-        <p class="section-eyebrow">a thousand birthday wishes</p>
-        <h2 class="section-title">What I Celebrate About You</h2>
+        <p class="section-eyebrow">a thousand reasons to celebrate you</p>
+        <h2 class="section-title">Hal-Hal yang Aku Suka dari Kamu</h2>
         <div class="reasons-grid">
           <div class="reason-card glass reveal-card">
-            <div class="reason-icon">🌹</div>
-            <h3>Your Smile</h3>
+            <div class="reason-icon">😊</div>
+            <h3>Senyummu</h3>
             <p>
-              The one that made me fall — and still does, every single day.
-              Happy birthday to that smile.
+              Entah kenapa, setiap lihat kamu senyum rasanya ikut senang juga.
+              Semoga hari ini ada banyak alasan buat kamu tersenyum.
             </p>
           </div>
           <div class="reason-card glass reveal-card delay1">
-            <div class="reason-icon">💫</div>
-            <h3>Your Soul</h3>
+            <div class="reason-icon">🌸</div>
+            <h3>Kebaikanmu</h3>
             <p>
-              Rare, luminous, and more precious than anything this world has to
-              offer. I'm so lucky it's mine.
+              Kamu selalu baik sama banyak orang, bahkan saat mungkin kamu
+              sendiri lagi capek. Semoga semua kebaikan itu suatu hari kembali
+              ke kamu berkali-kali lipat.
             </p>
           </div>
           <div class="reason-card glass reveal-card delay2">
-            <div class="reason-icon">🌸</div>
-            <h3>Your Kindness</h3>
+            <div class="reason-icon">💫</div>
+            <h3>Cara Kamu Menjalani Hidup</h3>
             <p>
-              The way you love and care for everyone around you makes this world
-              a softer, better place.
+              Aku kagum sama cara kamu menghadapi banyak hal. Walaupun kadang
+              berat, kamu tetap bisa bertahan dan terus melangkah.
             </p>
           </div>
           <div class="reason-card glass reveal-card delay3">
             <div class="reason-icon">✨</div>
-            <h3>Your Laughter</h3>
+            <h3>Tawamu</h3>
             <p>
-              My favourite sound in the universe. May today be filled with
-              endless reasons to laugh.
+              Semoga hari ini dipenuhi tawa, cerita seru, dan orang-orang yang
+              benar-benar sayang sama kamu.
             </p>
           </div>
           <div class="reason-card glass reveal-card delay4">
             <div class="reason-icon">🌺</div>
-            <h3>Your Strength</h3>
+            <h3>Semangatmu</h3>
             <p>
-              You've walked through storms with such grace. I admire you more
-              with every passing year.
+              Jangan pernah berhenti jadi diri sendiri. Karena versi kamu yang
+              sekarang aja udah cukup hebat.
             </p>
           </div>
           <div class="reason-card glass reveal-card delay5">
             <div class="reason-icon">💖</div>
-            <h3>Simply You</h3>
+            <h3>Menjadi Dirimu</h3>
             <p>
-              Every version of you, on every birthday — you are more than
-              enough. You are everything.
+              Ga perlu berubah jadi siapa-siapa. Tetap jadi diri kamu, karena
+              itu yang bikin kamu spesial.
             </p>
           </div>
         </div>
@@ -1160,16 +1182,19 @@
     <section id="garden">
       <div class="garden-bg"></div>
       <div class="section-inner">
-        <p class="section-eyebrow">your birthday garden</p>
+        <p class="section-eyebrow">Your Birthday Garden</p>
         <h2 class="section-title garden-title">
-          A Garden Blooming<br /><em>Just For You Today</em>
+          Setiap bunga di taman kecil ini<br /><em
+            >membawa satu doa buat kamu.</em
+          >
         </h2>
         <div class="flower-garden">
           <div class="garden-flower gf1">
             <div class="gf-bloom">🌹</div>
             <div class="gf-stem"></div>
             <div class="gf-tooltip glass">
-              <strong>Rose</strong><span>May love surround you always</span>
+              <strong>Rose</strong
+              ><span>Semoga selalu dikelilingi orang-orang yang tulus.</span>
             </div>
           </div>
           <div class="garden-flower gf2">
@@ -1177,47 +1202,60 @@
             <div class="gf-stem"></div>
             <div class="gf-tooltip glass">
               <strong>Cherry Blossom</strong
-              ><span>May today be as soft as you</span>
+              ><span>Semoga harimu selalu dipenuhi ketenangan.</span>
             </div>
           </div>
           <div class="garden-flower gf3">
             <div class="gf-bloom">🪷</div>
             <div class="gf-stem"></div>
             <div class="gf-tooltip glass">
-              <strong>Lotus</strong><span>May you bloom in all your glory</span>
+              <strong>Lotus</strong
+              ><span
+                >Semoga kamu terus berkembang menjadi versi terbaik dari
+                dirimu.</span
+              >
             </div>
           </div>
           <div class="garden-flower gf4">
             <div class="gf-bloom">🌺</div>
             <div class="gf-stem"></div>
             <div class="gf-tooltip glass">
-              <strong>Hibiscus</strong><span>May passion light your path</span>
+              <strong>Hibiscus</strong
+              ><span>Semoga semangatmu terus menyala setiap hari.</span>
             </div>
           </div>
           <div class="garden-flower gf5">
             <div class="gf-bloom">🌼</div>
             <div class="gf-stem"></div>
             <div class="gf-tooltip glass">
-              <strong>Daisy</strong><span>May joy follow you everywhere</span>
+              <strong>Daisy</strong
+              ><span
+                >Semoga kebahagiaan selalu menemukan jalan menuju kamu.</span
+              >
             </div>
           </div>
           <div class="garden-flower gf6">
             <div class="gf-bloom">🌷</div>
             <div class="gf-stem"></div>
             <div class="gf-tooltip glass">
-              <strong>Tulip</strong><span>May all your wishes come true</span>
+              <strong>Tulip</strong
+              ><span>Semoga semua impianmu pelan-pelan menjadi kenyataan.</span>
             </div>
           </div>
           <div class="garden-flower gf7">
             <div class="gf-bloom">🌻</div>
             <div class="gf-stem"></div>
             <div class="gf-tooltip glass">
-              <strong>Sunflower</strong><span>May your year shine bright</span>
+              <strong>Sunflower</strong
+              ><span
+                >Semoga kamu selalu bersinar, bahkan di hari-hari yang terasa
+                berat.</span
+              >
             </div>
           </div>
         </div>
         <p class="garden-note">
-          🎂 hover each flower — a birthday wish is hiding inside ✨
+          🌸 hover tiap bunga — ada doa kecil yang lagi nunggu di dalamnya ✨
         </p>
       </div>
     </section>
@@ -1225,8 +1263,12 @@
     <!-- ===== MEMORIES ===== -->
     <section id="memories">
       <div class="section-inner">
-        <p class="section-eyebrow">captured in time</p>
-        <h2 class="section-title">Your Beautiful<br /><em>Pictures</em></h2>
+        <p class="section-eyebrow">Captured Memories</p>
+        <h2 class="section-title">Beberapa Foto<br /><em>Favoritku</em></h2>
+        <p class="gallery-sub">
+          Beberapa momen yang pengen aku simpan, yang selalu berhasil
+          mengingatkanku betapa berartinya kamu.
+        </p>
         <div class="gallery-grid">
           <div class="gallery-card glass gc1">
             <img
@@ -1234,7 +1276,7 @@
               class="gallery-img"
               alt="Photo 1"
             />
-            <div class="gallery-caption">you</div>
+            <div class="gallery-caption">Senyum yang selalu bikin tenang.</div>
           </div>
           <div class="gallery-card glass gc2">
             <img
@@ -1242,7 +1284,7 @@
               class="gallery-img"
               alt="Photo 2"
             />
-            <div class="gallery-caption">are</div>
+            <div class="gallery-caption">Bahagia terus ya.</div>
           </div>
           <div class="gallery-card glass gc3">
             <img
@@ -1250,7 +1292,7 @@
               class="gallery-img"
               alt="Photo 3"
             />
-            <div class="gallery-caption">so</div>
+            <div class="gallery-caption">Tetap jadi diri kamu.</div>
           </div>
           <div class="gallery-card glass gc4">
             <img
@@ -1258,7 +1300,7 @@
               class="gallery-img"
               alt="Photo 4"
             />
-            <div class="gallery-caption">beautiful</div>
+            <div class="gallery-caption">Love, seperti biasanya.</div>
           </div>
         </div>
       </div>
@@ -1273,23 +1315,36 @@
           ><span class="ff delay2">🌹</span><span class="ff delay3">🌸</span
           ><span class="ff delay4">🌷</span>
         </div>
-        <p class="finale-eyebrow">happy birthday, my love 🎂</p>
-        <h2 class="finale-title">
-          You Are Loved<br /><em>More Than You Know</em>
-        </h2>
+        <p class="finale-eyebrow">🤍</p>
+        <h2 class="finale-title">Happy Birthday 🤍</h2>
         <p class="finale-body">
-          On this beautiful day that belongs entirely to you — I want you to
-          know that loving you is the greatest adventure of my life. Every year
-          with you is a gift I treasure. Every laugh, every moment, every quiet
-          heartbeat beside yours. Here's to you, today and every day after.
-          Happy Birthday, my love. 🌸
+          Hari ini memang cuma datang setahun sekali, tapi semoga rasa bahagia
+          yang kamu rasain hari ini bisa bertahan jauh lebih lama.
+        </p>
+        <p class="finale-body">
+          Terima kasih sudah hadir di dunia. Terima kasih sudah menjadi kamu.
+        </p>
+        <p class="finale-body">
+          Semoga langkahmu selalu dimudahkan. Semoga impianmu satu per satu
+          tercapai. Semoga selalu diberi kesehatan. Dan semoga kamu selalu punya
+          alasan untuk tersenyum.
+        </p>
+        <p class="finale-body">
+          Kalau nanti suatu hari kamu lagi capek, ingat ya... akan selalu ada
+          orang yang mendoakan kamu diam-diam supaya semuanya baik-baik saja.
+        </p>
+        <p class="finale-body">
+          Sekali lagi, Selamat ulang tahun. Semoga tahun ini penuh cerita indah,
+          dan semoga kamu selalu bahagia. 🤍
         </p>
         <div class="finale-heart"><div class="heart-pulse">💗</div></div>
-        <p class="finale-sig">Made with endless love, just for you 🎂🌸</p>
+        <p class="finale-sig">Made with love, especially for you.</p>
       </div>
     </section>
 
-    <footer><p>🎂 crafted with love &amp; birthday petals 🌸</p></footer>
+    <footer>
+      <p>🎂 dibuat dengan penuh cinta 🤍</p>
+    </footer>
 
     <!-- Scripts — tier already set in <head>; engine files load in dependency order -->
     <script src="./assets/js/render-loop.js"></script>
@@ -1552,15 +1607,15 @@
           input {
             border-radius: 0;
           }
-          [type="number"]::-webkit-inner-spin-button,
-          [type="number"]::-webkit-outer-spin-button {
+          [type='number']::-webkit-inner-spin-button,
+          [type='number']::-webkit-outer-spin-button {
             height: auto;
           }
-          [type="search"] {
+          [type='search'] {
             appearance: textfield;
             outline-offset: -2px;
           }
-          [type="search"]::-webkit-search-decoration {
+          [type='search']::-webkit-search-decoration {
             appearance: none;
           }
           textarea {
@@ -1586,23 +1641,23 @@
             text-transform: none;
           }
           button,
-          [type="button"],
-          [type="reset"],
-          [type="submit"],
-          [role="button"] {
+          [type='button'],
+          [type='reset'],
+          [type='submit'],
+          [role='button'] {
             cursor: pointer;
           }
           button::-moz-focus-inner,
-          [type="button"]::-moz-focus-inner,
-          [type="reset"]::-moz-focus-inner,
-          [type="submit"]::-moz-focus-inner {
+          [type='button']::-moz-focus-inner,
+          [type='reset']::-moz-focus-inner,
+          [type='submit']::-moz-focus-inner {
             border-style: none;
             padding: 0;
           }
           button,
-          html [type="button"],
-          [type="reset"],
-          [type="submit"] {
+          html [type='button'],
+          [type='reset'],
+          [type='submit'] {
             appearance: auto;
           }
           button,
@@ -1613,9 +1668,9 @@
             border-style: none;
           }
           button:-moz-focusring,
-          [type="button"]::-moz-focus-inner,
-          [type="reset"]::-moz-focus-inner,
-          [type="submit"]::-moz-focus-inner {
+          [type='button']::-moz-focus-inner,
+          [type='reset']::-moz-focus-inner,
+          [type='submit']::-moz-focus-inner {
             outline: 1px dotted ButtonText;
           }
           select {
@@ -1655,13 +1710,13 @@
           progress {
             vertical-align: baseline;
           }
-          [aria-busy="true"] {
+          [aria-busy='true'] {
             cursor: progress;
           }
           [aria-controls] {
             cursor: pointer;
           }
-          [aria-disabled="true"] {
+          [aria-disabled='true'] {
             cursor: default;
           }
           ul,
@@ -1905,7 +1960,7 @@
             gap: 6px;
           }
           .price-card__feature:before {
-            content: "";
+            content: '';
             display: block;
             width: 4px;
             height: 4px;
@@ -1945,9 +2000,9 @@
           font-family: FigtreeVF;
           src:
             url(chrome-extension://panammoooggmlehahpcjckcncfeffcoi/fonts/FigtreeVF.woff2)
-              format("woff2 supports variations"),
+              format('woff2 supports variations'),
             url(chrome-extension://panammoooggmlehahpcjckcncfeffcoi/fonts/FigtreeVF.woff2)
-              format("woff2-variations");
+              format('woff2-variations');
           font-weight: 100 1000;
           font-display: swap;
         }

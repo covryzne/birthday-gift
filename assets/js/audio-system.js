@@ -6,18 +6,18 @@
   Place covers at: assets/images/img1.jpeg  etc.
    ============================================================= */
 
-"use strict";
+'use strict';
 
 /* ─────────────────────────────────────────────
    1. PLAYLIST — Edit your tracks here
    ───────────────────────────────────────────── */
 const playlist = [
   {
-    id: "song1",
-    title: "Semua Aku Dirayakan",
-    artist: "Nadin Amizah",
-    file: "assets/audio/song1.mp3",
-    cover: "assets/images/img1.jpeg",
+    id: 'song1',
+    title: 'You and I',
+    artist: 'One Direction',
+    file: 'assets/audio/song1.mp3',
+    cover: 'assets/images/cover.jpeg',
     startTime: 116, // seconds — where playback begins
     endTime: null, // seconds — where it ends/loops (null = full track)
     loopStart: null, // loop rewind point (null = startTime)
@@ -27,11 +27,11 @@ const playlist = [
     fadeOut: 2.0,
   },
   {
-    id: "song2",
-    title: "Song Title 2",
-    artist: "Artist Name",
-    file: "assets/audio/song1.mp3",
-    cover: "assets/images/img2.jpeg",
+    id: 'song2',
+    title: 'Song Title 2',
+    artist: 'Artist Name',
+    file: 'assets/audio/song1.mp3',
+    cover: 'assets/images/img2.jpeg',
     startTime: 0,
     endTime: null,
     loopStart: null,
@@ -41,11 +41,11 @@ const playlist = [
     fadeOut: 2.0,
   },
   {
-    id: "song3",
-    title: "Song Title 3",
-    artist: "Artist Name",
-    file: "assets/audio/song1.mp3",
-    cover: "assets/images/img3.jpeg",
+    id: 'song3',
+    title: 'Song Title 3',
+    artist: 'Artist Name',
+    file: 'assets/audio/song1.mp3',
+    cover: 'assets/images/img3.jpeg',
     startTime: 0,
     endTime: null,
     loopStart: null,
@@ -101,7 +101,7 @@ const AudioEngine = (() => {
       bufferCache[cfg.id] = buf;
       return buf;
     } catch (e) {
-      console.warn("[AudioEngine] Could not load", cfg.file, e.message);
+      console.warn('[AudioEngine] Could not load', cfg.file, e.message);
       return null;
     }
   }
@@ -272,7 +272,7 @@ const AudioEngine = (() => {
   async function unlock() {
     if (autoplayReady) return;
     initContext();
-    if (audioCtx.state === "suspended") await audioCtx.resume();
+    if (audioCtx.state === 'suspended') await audioCtx.resume();
     autoplayReady = true;
     preloadTrack(playlist[0]);
     playTrack(0, false);
@@ -343,18 +343,18 @@ const UI = (() => {
   /* ── Format seconds → m:ss ── */
   const fmt = (s) => {
     const m = Math.floor(s / 60);
-    return `${m}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
+    return `${m}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
   };
 
   /* ── Build DOM ── */
   function build() {
     injectCSS();
 
-    root = document.createElement("div");
-    root.id = "cp-root";
+    root = document.createElement('div');
+    root.id = 'cp-root';
     /* Panel starts hidden — no cp-minimized class needed */
-    root.setAttribute("role", "region");
-    root.setAttribute("aria-label", "Music Player");
+    root.setAttribute('role', 'region');
+    root.setAttribute('aria-label', 'Music Player');
 
     root.innerHTML = `
       <!-- Ambient blurred bg from cover -->
@@ -445,10 +445,10 @@ const UI = (() => {
     document.body.appendChild(root);
 
     /* Build floating toggle button */
-    toggleBtn = document.createElement("button");
-    toggleBtn.id = "cp-toggle-btn";
-    toggleBtn.setAttribute("aria-label", "Toggle music player");
-    toggleBtn.setAttribute("aria-expanded", "false");
+    toggleBtn = document.createElement('button');
+    toggleBtn.id = 'cp-toggle-btn';
+    toggleBtn.setAttribute('aria-label', 'Toggle music player');
+    toggleBtn.setAttribute('aria-expanded', 'false');
     toggleBtn.innerHTML = `
       <!-- Musical note icon -->
       <svg class="cp-toggle-icon cp-icon-note" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -459,7 +459,7 @@ const UI = (() => {
         <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
       </svg>
     `;
-    toggleBtn.addEventListener("click", () => {
+    toggleBtn.addEventListener('click', () => {
       togglePanel();
       /* First click also unlocks audio */
       AudioEngine.unlock();
@@ -467,46 +467,46 @@ const UI = (() => {
     document.body.appendChild(toggleBtn);
 
     /* Cache elements */
-    coverImg = root.querySelector(".cp-cover");
-    coverBg = root.querySelector(".cp-bg-img");
-    titleEl = root.querySelector(".cp-title");
-    artistEl = root.querySelector(".cp-artist");
-    playBtn = root.querySelector(".cp-play-btn");
-    prevBtn = root.querySelector(".cp-prev-btn");
-    nextBtn = root.querySelector(".cp-next-btn");
-    progressFill = root.querySelector(".cp-progress-fill");
-    progressDot = root.querySelector(".cp-progress-dot");
-    timeEl = root.querySelector(".cp-time-cur");
-    durEl = root.querySelector(".cp-time-dur");
-    volSlider = root.querySelector(".cp-vol-input");
-    volFill = root.querySelector(".cp-vol-fill");
-    vizCanvas = root.querySelector(".cp-viz");
-    vizCtx = vizCanvas.getContext("2d");
-    fallbackEl = root.querySelector(".cp-fallback");
-    shineEl = root.querySelector(".cp-shine");
+    coverImg = root.querySelector('.cp-cover');
+    coverBg = root.querySelector('.cp-bg-img');
+    titleEl = root.querySelector('.cp-title');
+    artistEl = root.querySelector('.cp-artist');
+    playBtn = root.querySelector('.cp-play-btn');
+    prevBtn = root.querySelector('.cp-prev-btn');
+    nextBtn = root.querySelector('.cp-next-btn');
+    progressFill = root.querySelector('.cp-progress-fill');
+    progressDot = root.querySelector('.cp-progress-dot');
+    timeEl = root.querySelector('.cp-time-cur');
+    durEl = root.querySelector('.cp-time-dur');
+    volSlider = root.querySelector('.cp-vol-input');
+    volFill = root.querySelector('.cp-vol-fill');
+    vizCanvas = root.querySelector('.cp-viz');
+    vizCtx = vizCanvas.getContext('2d');
+    fallbackEl = root.querySelector('.cp-fallback');
+    shineEl = root.querySelector('.cp-shine');
 
     /* Events */
-    playBtn.addEventListener("click", () => AudioEngine.toggle());
-    prevBtn.addEventListener("click", () => AudioEngine.prevTrack());
-    nextBtn.addEventListener("click", () => AudioEngine.nextTrack());
+    playBtn.addEventListener('click', () => AudioEngine.toggle());
+    prevBtn.addEventListener('click', () => AudioEngine.prevTrack());
+    nextBtn.addEventListener('click', () => AudioEngine.nextTrack());
 
-    volSlider.addEventListener("input", (e) => {
+    volSlider.addEventListener('input', (e) => {
       const v = +e.target.value / 100;
       AudioEngine.setVolume(v);
-      volFill.style.width = e.target.value + "%";
+      volFill.style.width = e.target.value + '%';
     });
 
     /* Mouse-reactive lighting */
-    root.addEventListener("mousemove", (e) => {
+    root.addEventListener('mousemove', (e) => {
       const r = root.getBoundingClientRect();
       mouseX = (e.clientX - r.left) / r.width;
       mouseY = (e.clientY - r.top) / r.height;
-      root.querySelector(".cp-light-orb").style.transform =
+      root.querySelector('.cp-light-orb').style.transform =
         `translate(${mouseX * 100}%, ${mouseY * 100}%) translate(-50%, -50%)`;
     });
 
     /* Minimise button */
-    root.querySelector(".cp-mini-btn").addEventListener("click", (e) => {
+    root.querySelector('.cp-mini-btn').addEventListener('click', (e) => {
       e.stopPropagation();
       closePanel();
     });
@@ -521,8 +521,8 @@ const UI = (() => {
       progressRaf = requestAnimationFrame(tick);
       const { current, duration, pct } = AudioEngine.getProgress();
       const p = Math.min(pct * 100, 100);
-      progressFill.style.width = p + "%";
-      progressDot.style.left = p + "%";
+      progressFill.style.width = p + '%';
+      progressDot.style.left = p + '%';
       if (timeEl) timeEl.textContent = fmt(current);
       if (durEl) durEl.textContent = fmt(duration);
     }
@@ -563,8 +563,8 @@ const UI = (() => {
   /* ── Load cover image into player ── */
   function loadCover(src) {
     if (!src) {
-      coverImg.src = "";
-      coverBg.src = "";
+      coverImg.src = '';
+      coverBg.src = '';
       return;
     }
     coverImg.src = src;
@@ -575,21 +575,21 @@ const UI = (() => {
   function sync(playing, idx) {
     /* Play/pause icons */
     playBtn
-      .querySelector(".cp-icon-play")
-      .classList.toggle("cp-hidden", playing);
+      .querySelector('.cp-icon-play')
+      .classList.toggle('cp-hidden', playing);
     playBtn
-      .querySelector(".cp-icon-pause")
-      .classList.toggle("cp-hidden", !playing);
-    root.classList.toggle("cp-playing", playing);
+      .querySelector('.cp-icon-pause')
+      .classList.toggle('cp-hidden', !playing);
+    root.classList.toggle('cp-playing', playing);
     /* Update toggle button playing state */
-    if (toggleBtn) toggleBtn.classList.toggle("cp-is-playing", playing);
+    if (toggleBtn) toggleBtn.classList.toggle('cp-is-playing', playing);
 
     /* Track metadata */
     if (idx >= 0 && idx < playlist.length) {
       const t = playlist[idx];
-      titleEl.textContent = t.title || "Unknown";
-      artistEl.textContent = t.artist || "";
-      loadCover(t.cover || "");
+      titleEl.textContent = t.title || 'Unknown';
+      artistEl.textContent = t.artist || '';
+      loadCover(t.cover || '');
       /* Update duration display immediately */
       if (durEl && t.endTime)
         durEl.textContent = fmt(t.endTime - (t.startTime || 0));
@@ -597,12 +597,12 @@ const UI = (() => {
   }
 
   function showFallback() {
-    fallbackEl.classList.remove("cp-hidden");
+    fallbackEl.classList.remove('cp-hidden');
     fallbackEl.addEventListener(
-      "click",
+      'click',
       () => {
         AudioEngine.unlock();
-        fallbackEl.classList.add("cp-hidden");
+        fallbackEl.classList.add('cp-hidden');
       },
       { once: true },
     );
@@ -610,7 +610,7 @@ const UI = (() => {
 
   /* ── Inject all CSS ── */
   function injectCSS() {
-    const s = document.createElement("style");
+    const s = document.createElement('style');
     s.textContent = `
 /* =========================================
    CINEMATIC MUSIC PLAYER — Hidden-by-default v3
@@ -1031,16 +1031,16 @@ const UI = (() => {
 
   function openPanel() {
     isPanelOpen = true;
-    root.classList.add("cp-visible");
-    toggleBtn.classList.add("cp-panel-open");
-    toggleBtn.setAttribute("aria-expanded", "true");
+    root.classList.add('cp-visible');
+    toggleBtn.classList.add('cp-panel-open');
+    toggleBtn.setAttribute('aria-expanded', 'true');
   }
 
   function closePanel() {
     isPanelOpen = false;
-    root.classList.remove("cp-visible");
-    toggleBtn.classList.remove("cp-panel-open");
-    toggleBtn.setAttribute("aria-expanded", "false");
+    root.classList.remove('cp-visible');
+    toggleBtn.classList.remove('cp-panel-open');
+    toggleBtn.setAttribute('aria-expanded', 'false');
   }
 
   function togglePanel() {
@@ -1055,7 +1055,7 @@ const UI = (() => {
    ───────────────────────────────────────────── */
 function initSectionAtmosphere() {
   if (!Object.keys(SECTION_MUSIC_MAP).length) return;
-  const sections = document.querySelectorAll("section[id]");
+  const sections = document.querySelectorAll('section[id]');
   if (!sections.length) return;
   const obs = new IntersectionObserver(
     (entries) => {
@@ -1075,23 +1075,23 @@ function initSectionAtmosphere() {
    ───────────────────────────────────────────── */
 function patchIntroForAudio() {
   const orig = window.transitionToMain;
-  if (typeof orig === "function") {
+  if (typeof orig === 'function') {
     window.transitionToMain = function () {
       AudioEngine.cinematicFade(1.2);
       orig.apply(this, arguments);
       setTimeout(() => AudioEngine.cinematicFadeIn(2.5), 1600);
     };
   }
-  const gift = document.getElementById("gift-container");
+  const gift = document.getElementById('gift-container');
   if (gift)
-    gift.addEventListener("click", () => AudioEngine.unlock(), { once: true });
+    gift.addEventListener('click', () => AudioEngine.unlock(), { once: true });
 }
 
 /* ─────────────────────────────────────────────
    6. AUTOPLAY GATE
    ───────────────────────────────────────────── */
 function setupAutoplayGate() {
-  const EVS = ["click", "touchstart", "keydown", "pointerdown"];
+  const EVS = ['click', 'touchstart', 'keydown', 'pointerdown'];
   let done = false;
   function go() {
     if (done) return;
@@ -1105,7 +1105,7 @@ function setupAutoplayGate() {
 /* ─────────────────────────────────────────────
    7. BOOT
    ───────────────────────────────────────────── */
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener('DOMContentLoaded', () => {
   UI.build();
   patchIntroForAudio();
   setupAutoplayGate();
