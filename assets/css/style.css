@@ -899,13 +899,13 @@ section {
 }
 .gf-tooltip strong {
   display: block;
-  color: var(--text-dark);
+  color: rgba(255, 230, 235, 0.8);
   font-family: var(--ff-display);
   font-size: 1rem;
   font-weight: 500;
 }
 .gf-tooltip span {
-  color: var(--text-soft);
+  color: rgba(255, 230, 235, 0.8);
   font-weight: 200;
 }
 .garden-flower:hover .gf-tooltip {

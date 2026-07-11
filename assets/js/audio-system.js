@@ -26,34 +26,34 @@ const playlist = [
     fadeIn: 2.5,
     fadeOut: 2.0,
   },
-  {
-    id: 'song2',
-    title: 'Song Title 2',
-    artist: 'Artist Name',
-    file: 'assets/audio/song1.mp3',
-    cover: 'assets/images/img2.jpeg',
-    startTime: 0,
-    endTime: null,
-    loopStart: null,
-    volume: 0.75,
-    loop: true,
-    fadeIn: 2.5,
-    fadeOut: 2.0,
-  },
-  {
-    id: 'song3',
-    title: 'Song Title 3',
-    artist: 'Artist Name',
-    file: 'assets/audio/song1.mp3',
-    cover: 'assets/images/img3.jpeg',
-    startTime: 0,
-    endTime: null,
-    loopStart: null,
-    volume: 0.75,
-    loop: true,
-    fadeIn: 2.5,
-    fadeOut: 2.0,
-  },
+  // {
+  //   id: 'song2',
+  //   title: 'Song Title 2',
+  //   artist: 'Artist Name',
+  //   file: 'assets/audio/song1.mp3',
+  //   cover: 'assets/images/img2.jpeg',
+  //   startTime: 0,
+  //   endTime: null,
+  //   loopStart: null,
+  //   volume: 0.75,
+  //   loop: true,
+  //   fadeIn: 2.5,
+  //   fadeOut: 2.0,
+  // },
+  // {
+  //   id: 'song3',
+  //   title: 'Song Title 3',
+  //   artist: 'Artist Name',
+  //   file: 'assets/audio/song1.mp3',
+  //   cover: 'assets/images/img3.jpeg',
+  //   startTime: 0,
+  //   endTime: null,
+  //   loopStart: null,
+  //   volume: 0.75,
+  //   loop: true,
+  //   fadeIn: 2.5,
+  //   fadeOut: 2.0,
+  // },
 ];
 
 /* Section → track id map (leave empty to disable) */
@@ -1016,10 +1016,23 @@ const UI = (() => {
 
 @media (max-width: 600px) {
   #cp-toggle-btn { bottom: 16px; right: 16px; width: 46px; height: 46px; }
-  #cp-root { bottom: 74px; right: 16px; width: 200px; border-radius: 16px; }
+  #cp-root {
+    bottom: 70px;
+    right: 16px;
+    width: 176px;
+    border-radius: 16px;
+  }
+  .cp-card { padding: 14px 12px 12px; gap: 10px; }
+  .cp-viz { width: 96px; height: 30px; }
   .cp-title { font-size: 12px; }
+  .cp-artist { font-size: 9px; }
+  .cp-times { font-size: 8px; }
   .cp-play-btn { width: 40px; height: 40px; }
   .cp-play-btn svg { width: 20px; height: 20px; }
+  .cp-prev-btn, .cp-next-btn { width: 28px; height: 28px; }
+  .cp-prev-btn svg, .cp-next-btn svg { width: 16px; height: 16px; }
+  .cp-vol-row { gap: 6px; }
+  .cp-vol-icon { width: 12px; height: 12px; }
 }
     `;
     document.head.appendChild(s);
